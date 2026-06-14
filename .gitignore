@@ -1,28 +1,25 @@
-# dependencies
-/node_modules
+# Dependency directories
+node_modules/
 
-# testing
-/coverage
+# Build outputs
+dist/
+.next/
+build/
 
-# next.js
-/.next/
-/out/
+# Local environment variables
+.env
+.env.local
+.env.*.local
 
-# production
-/build
-
-# misc
+# IDE and OS files
+.vscode/
+.idea/
 .DS_Store
-*.pem
+Thumbs.db
 
-# debug
+# Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# local env files
-.env*.local
-.env
-
-# vercel
-.vercel
+logs/
+*.log

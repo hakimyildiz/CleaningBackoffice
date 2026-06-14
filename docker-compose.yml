@@ -2,45 +2,56 @@ version: '3.8'
 
 services:
   mariadb:
-    image: mariadb:10.11
-    container_name: cleaning_service_db
+    image: mariadb:11
+    container_name: mopsy_db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: ${DB_NAME:-cleaning_service}
-      MYSQL_USER: ${DB_USER:-cleaning_user}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-cleaning_password}
-    ports:
-      - "${DB_PORT:-3306}:3306"
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - mariadb_data:/var/lib/mysql
-      - ./migrations:/docker-entrypoint-initdb.d
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - mopsy_db_data:/var/lib/mysql
+      - ./backend/config/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./backend/config/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
+    networks:
+      - mopsy_net
 
-#  api:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    container_name: cleaning_service_api
-#    restart: unless-stopped
-#    ports:
-#      - "${API_PORT:-3001}:3001"
-#    environment:
-#      DB_HOST: mariadb
-#      DB_PORT: 3306
-#      DB_USER: ${DB_USER:-cleaning_user}
-#      DB_PASSWORD: ${DB_PASSWORD:-cleaning_password}
-#      DB_NAME: ${DB_NAME:-cleaning_service}
-#      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
-#      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID:-}
-#      PAYPAL_SECRET: ${PAYPAL_SECRET:-}
-#    depends_on:
-#      mariadb:
-#        condition: service_healthy
+  backend:
+    build: ./backend
+    container_name: mopsy_backend
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${BACKEND_PORT}
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_ACCESS_EXPIRES_IN: ${JWT_ACCESS_EXPIRES_IN}
+      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN}
+    networks:
+      - mopsy_net
+
+  frontend:
+    build: ./frontend
+    container_name: mopsy_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT}:80"
+    networks:
+      - mopsy_net
 
 volumes:
-  mariadb_data:
+  mopsy_db_data:
+
+networks:
+  mopsy_net:
+    driver: bridge
