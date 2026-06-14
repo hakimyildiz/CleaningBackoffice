@@ -36,7 +36,7 @@ export async function apiRequest<T>(
   const response = await fetch(`${API_BASE}${endpoint}`, {
     ...options,
     headers,
-    credentials: 'include',
+    credentials: 'include', cache: 'no-store',
   });
 
   if (!response.ok) {

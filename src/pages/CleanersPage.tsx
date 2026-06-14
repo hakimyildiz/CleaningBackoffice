@@ -268,7 +268,7 @@ export function CleanersPage() {
               </div>
               <div className="flex items-center gap-3 pt-4">
                 <label className="flex items-center gap-2 text-sm text-slate-600">
-                  <input type="checkbox" checked={formData.IsActive !== false} onChange={(e) => setFormData({ ...formData, IsActive: e.target.checked })} className="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                  <input type="checkbox" checked={formData.IsActive !== false && formData.IsActive !== 0} onChange={(e) => setFormData({ ...formData, IsActive: e.target.checked })} className="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
                   Active
                 </label>
               </div>

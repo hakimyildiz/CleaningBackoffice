@@ -62,7 +62,8 @@ async function apiRequest(endpoint, options = {}) {
     const response = await fetch(`${API_BASE}${endpoint}`, {
         ...options,
         headers,
-        credentials: 'include'
+        credentials: 'include',
+        cache: 'no-store'
     });
     if (!response.ok) {
         const error = await response.json().catch(()=>({
