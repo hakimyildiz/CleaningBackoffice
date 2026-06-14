@@ -21,26 +21,26 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: cleaning_service_api
-    restart: unless-stopped
-    ports:
-      - "${API_PORT:-3001}:3001"
-    environment:
-      DB_HOST: mariadb
-      DB_PORT: 3306
-      DB_USER: ${DB_USER:-cleaning_user}
-      DB_PASSWORD: ${DB_PASSWORD:-cleaning_password}
-      DB_NAME: ${DB_NAME:-cleaning_service}
-      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
-      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID:-}
-      PAYPAL_SECRET: ${PAYPAL_SECRET:-}
-    depends_on:
-      mariadb:
-        condition: service_healthy
+#  api:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: cleaning_service_api
+#    restart: unless-stopped
+#    ports:
+#      - "${API_PORT:-3001}:3001"
+#    environment:
+#      DB_HOST: mariadb
+#      DB_PORT: 3306
+#      DB_USER: ${DB_USER:-cleaning_user}
+#      DB_PASSWORD: ${DB_PASSWORD:-cleaning_password}
+#      DB_NAME: ${DB_NAME:-cleaning_service}
+#      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
+#      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID:-}
+#      PAYPAL_SECRET: ${PAYPAL_SECRET:-}
+#    depends_on:
+#      mariadb:
+#        condition: service_healthy
 
 volumes:
   mariadb_data:

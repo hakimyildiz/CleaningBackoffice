@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { cleanersApi, type Cleaner } from '../lib/api';
-import { LuPlus as Plus, LuSearch as Search, LuEdit as Edit, LuTrash2 as Trash2, LuPhone as Phone, LuMail as Mail, LuMapPin as MapPin, LuUserCheck as UserCheck, LuX as X, LuSave as Save } from 'react-icons/lu';
+import { LuPlus as Plus, LuSearch as Search, LuPencil as Edit, LuTrash2 as Trash2, LuPhone as Phone, LuMail as Mail, LuMapPin as MapPin, LuUserCheck as UserCheck, LuX as X, LuSave as Save } from 'react-icons/lu';
 
 export function CleanersPage() {
   const [cleaners, setCleaners] = useState<Cleaner[]>([]);

@@ -3,6 +3,8 @@ import { useState, ReactNode } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import type { UserRole } from '../../lib/api';
 import { LuHouse as Home, LuUsers as Users, LuBuilding2 as Building2, LuCalendar as Calendar, LuFileText as FileText, LuSettings as Settings, LuLogOut as LogOut, LuMenu as Menu, LuX as X, LuShield as Shield, LuUserCheck as UserCheck, LuUser as User, LuBuilding as Building, LuWallet as Wallet, LuClock as Clock, LuChevronDown as ChevronDown, LuLayoutDashboard as LayoutDashboard } from 'react-icons/lu';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const roleLabels: Record<UserRole, string> = {
   admin: 'Administrator',
@@ -60,6 +62,7 @@ export function MainLayout({ children }: { children: ReactNode }) {
   const { userRole, signOut, user } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+  const pathname = usePathname();
 
   const filteredNavItems = navItems.filter(
     (item) => item.roles.length === 0 || item.roles.some((r) => r === userRole || userRole === 'admin')
@@ -115,40 +118,66 @@ export function MainLayout({ children }: { children: ReactNode }) {
 
           <nav className="flex-1 overflow-y-auto py-4 px-3">
             <ul className="space-y-1">
-              {filteredNavItems.map((item) => (
+              {filteredNavItems.map((item) => {
+                const isActive = item.path === pathname || (item.children && item.children.some(c => c.path === pathname));
+                return (
                 <li key={item.label}>
-                  <button
-                    onClick={() => handleNavClick(item)}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                      expandedMenu === item.label || (!item.children && item.path === '/')
-                        ? 'bg-blue-50 text-blue-700'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.label}</span>
-                    </div>
-                    {item.children && (
+                  {item.children ? (
+                    <button
+                      onClick={() => handleNavClick(item)}
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        expandedMenu === item.label || isActive
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.label}</span>
+                      </div>
                       <ChevronDown className={`h-4 w-4 transition-transform ${expandedMenu === item.label ? 'rotate-180' : ''}`} />
-                    )}
-                  </button>
-                  {item.children && expandedMenu === item.label && (
+                    </button>
+                  ) : (
+                    <Link
+                      href={item.path}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        pathname === item.path
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.label}</span>
+                      </div>
+                    </Link>
+                  )}
+                  
+                  {item.children && (expandedMenu === item.label || isActive) && (
                     <ul className="mt-1 ml-4 space-y-1">
                       {item.children
                         .filter((child) => child.roles.length === 0 || child.roles.some((r) => r === userRole || userRole === 'admin'))
                         .map((child) => (
                           <li key={child.label}>
-                            <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                            <Link 
+                              href={child.path}
+                              onClick={() => setSidebarOpen(false)}
+                              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                                pathname === child.path
+                                  ? 'bg-blue-50 text-blue-700 font-medium'
+                                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                              }`}
+                            >
                               <child.icon className="h-4 w-4" />
                               <span>{child.label}</span>
-                            </button>
+                            </Link>
                           </li>
                         ))}
                     </ul>
                   )}
                 </li>
-              ))}
+              )})}
             </ul>
           </nav>
 

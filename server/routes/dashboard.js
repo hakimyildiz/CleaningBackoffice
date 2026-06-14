@@ -38,12 +38,12 @@ router.get('/stats', authMiddleware, async (req, res) => {
     );
 
     res.json({
-      totalCustomers: customerCount.count,
-      activeCleaners: activeCleaners.count,
-      todayJobs: todayJobs.count,
-      completedToday: completedToday.count,
-      pendingInvoices: pendingInvoices.count,
-      totalRevenue: totalRevenue.total || 0,
+      totalCustomers: Number(customerCount.count),
+      activeCleaners: Number(activeCleaners.count),
+      todayJobs: Number(todayJobs.count),
+      completedToday: Number(completedToday.count),
+      pendingInvoices: Number(pendingInvoices.count),
+      totalRevenue: Number(totalRevenue.total || 0),
       upcomingJobs
     });
   } catch (error) {

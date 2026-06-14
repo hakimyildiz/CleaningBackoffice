@@ -60,11 +60,11 @@ router.post('/', authMiddleware, roleMiddleware('admin', 'manager'), async (req,
         IsActive, Rate, Note, UserID
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        data.title, data.firstName, data.sureName, data.occupation, data.email,
-        data.homePhone, data.workPhone, data.mobilePhone, data.birthDate, data.gender,
-        data.registerDate || new Date(), data.bankType, data.bankName, data.sortCode, data.accountNo,
-        data.iban, data.addressLine, data.city, data.postCode, data.niNo,
-        data.isActive ?? true, data.rate, data.note, data.userId || null
+        data.Title, data.FirstName, data.SureName, data.Occupation, data.Email,
+        data.HomePhone, data.WorkPhone, data.MobilePhone, data.BrithDate, data.Gender,
+        data.RegisterDate || new Date(), data.BankType, data.BankName, data.SortCode, data.AccountNo,
+        data.IBAN, data.AddressLine, data.City, data.PostCode, data.NINo,
+        data.IsActive ?? true, data.Rate, data.Note, data.UserID || null
       ]
     );
 
@@ -89,11 +89,11 @@ router.put('/:id', authMiddleware, roleMiddleware('admin', 'manager', 'cleaner_m
         IsActive = ?, Rate = ?, Note = ?
       WHERE CleanerID = ?`,
       [
-        data.title, data.firstName, data.sureName, data.occupation, data.email,
-        data.homePhone, data.workPhone, data.mobilePhone, data.birthDate, data.gender,
-        data.bankType, data.bankName, data.sortCode, data.accountNo, data.iban,
-        data.addressLine, data.city, data.postCode, data.niNo,
-        data.isActive, data.rate, data.note, req.params.id
+        data.Title, data.FirstName, data.SureName, data.Occupation, data.Email,
+        data.HomePhone, data.WorkPhone, data.MobilePhone, data.BrithDate, data.Gender,
+        data.BankType, data.BankName, data.SortCode, data.AccountNo, data.IBAN,
+        data.AddressLine, data.City, data.PostCode, data.NINo,
+        data.IsActive, data.Rate, data.Note, req.params.id
       ]
     );
 

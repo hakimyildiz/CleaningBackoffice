@@ -28,7 +28,7 @@ INSERT IGNORE INTO SystemSettings (SettingKey, SettingValue) VALUES
 
 -- Insert default admin user
 INSERT IGNORE INTO UserLogin (UserID, Username, UserPassword, Email, Role, IsActive)
-SELECT UUID(), 'admin', '$2a$10$XQJvZQvZQvZQvZQvZQvZeNQvZQvZQvZQvZQvZQvZQvZQvZQvZQvZQ', 'admin@cleanpro.com', 'admin', TRUE
+SELECT UUID(), 'admin', '$2a$10$owSdIaqBjUpDlweDMNcoLOPxUSusDLF5ztX/Cs5KCIOQeoKVafBWy', 'admin@cleanpro.com', 'admin', TRUE
 WHERE NOT EXISTS (SELECT 1 FROM UserLogin WHERE Role = 'admin');
 
 -- Note: The password for the admin user is 'admin123'

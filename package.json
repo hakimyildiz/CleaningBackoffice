@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "next dev -p 3002",
-    "server": "node server/index.js",
+    "server": "node --env-file=.env server/index.js",
     "build": "next build",
     "lint": "next lint",
     "start": "next start",
