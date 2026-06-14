@@ -1,25 +1,8 @@
+"use client";
 import { useState, ReactNode } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import type { UserRole } from '../../lib/api';
-import {
-  Home,
-  Users,
-  Building2,
-  Calendar,
-  FileText,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  Shield,
-  UserCheck,
-  User,
-  Building,
-  Wallet,
-  Clock,
-  ChevronDown,
-  LayoutDashboard,
-} from 'lucide-react';
+import { LuHouse as Home, LuUsers as Users, LuBuilding2 as Building2, LuCalendar as Calendar, LuFileText as FileText, LuSettings as Settings, LuLogOut as LogOut, LuMenu as Menu, LuX as X, LuShield as Shield, LuUserCheck as UserCheck, LuUser as User, LuBuilding as Building, LuWallet as Wallet, LuClock as Clock, LuChevronDown as ChevronDown, LuLayoutDashboard as LayoutDashboard } from 'react-icons/lu';
 
 const roleLabels: Record<UserRole, string> = {
   admin: 'Administrator',

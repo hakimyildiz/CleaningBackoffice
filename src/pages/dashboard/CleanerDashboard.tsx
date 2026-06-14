@@ -1,15 +1,8 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { serviceRecordsApi, type ServiceRecord } from '../../lib/api';
-import {
-  Clock,
-  Camera,
-  CheckCircle,
-  Play,
-  Square,
-  Calendar,
-  MapPin,
-} from 'lucide-react';
+import { LuClock as Clock, LuCamera as Camera, LuCircleCheck as CheckCircle, LuPlay as Play, LuSquare as Square, LuCalendar as Calendar, LuMapPin as MapPin } from 'react-icons/lu';
 
 export function CleanerDashboard() {
   const { user, entityId } = useAuth();

@@ -1,6 +1,7 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { invoicesApi, type Invoice } from '../../lib/api';
-import { FileText, DollarSign, TrendingUp, CreditCard } from 'lucide-react';
+import { LuFileText as FileText, LuDollarSign as DollarSign, LuTrendingUp as TrendingUp, LuCreditCard as CreditCard } from 'react-icons/lu';
 
 export function AgencyBookkeeperDashboard() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);

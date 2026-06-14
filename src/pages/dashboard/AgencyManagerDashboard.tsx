@@ -1,12 +1,7 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { serviceRecordsApi, invoicesApi, type ServiceRecord, type Invoice } from '../../lib/api';
-import {
-  Building,
-  Calendar,
-  FileText,
-  DollarSign,
-  TrendingUp,
-} from 'lucide-react';
+import { LuBuilding as Building, LuCalendar as Calendar, LuFileText as FileText, LuDollarSign as DollarSign, LuTrendingUp as TrendingUp } from 'react-icons/lu';
 
 export function AgencyManagerDashboard() {
   const [todayJobs, setTodayJobs] = useState<ServiceRecord[]>([]);

@@ -1,6 +1,7 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { serviceRecordsApi, type ServiceRecord } from '../../lib/api';
-import { Building, Clock, CheckCircle, AlertCircle, Calendar } from 'lucide-react';
+import { LuBuilding as Building, LuClock as Clock, LuCircleCheck as CheckCircle, LuCircleAlert as AlertCircle, LuCalendar as Calendar } from 'react-icons/lu';
 
 export function AgencyStaffDashboard() {
   const [properties, setProperties] = useState<ServiceRecord[]>([]);

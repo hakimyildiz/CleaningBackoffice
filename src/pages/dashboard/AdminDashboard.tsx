@@ -1,18 +1,8 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { dashboardApi, type ServiceRecord, type DashboardStats } from '../../lib/api';
-import {
-  Users,
-  Building2,
-  Calendar,
-  FileText,
-  TrendingUp,
-  Clock,
-  AlertCircle,
-  CheckCircle,
-  Plus,
-  ArrowRight,
-} from 'lucide-react';
+import { LuUsers as Users, LuBuilding2 as Building2, LuCalendar as Calendar, LuFileText as FileText, LuTrendingUp as TrendingUp, LuClock as Clock, LuCircleAlert as AlertCircle, LuCircleCheck as CheckCircle, LuPlus as Plus, LuArrowRight as ArrowRight } from 'react-icons/lu';
 
 interface QuickAction {
   label: string;

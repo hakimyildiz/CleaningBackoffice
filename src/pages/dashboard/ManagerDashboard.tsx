@@ -1,10 +1,7 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { serviceRecordsApi, type ServiceRecord } from '../../lib/api';
-import {
-  Calendar,
-  Clock,
-  CheckCircle,
-} from 'lucide-react';
+import { LuCalendar as Calendar, LuClock as Clock, LuCircleCheck as CheckCircle } from 'react-icons/lu';
 
 export function ManagerDashboard() {
   const [todayJobs, setTodayJobs] = useState<ServiceRecord[]>([]);

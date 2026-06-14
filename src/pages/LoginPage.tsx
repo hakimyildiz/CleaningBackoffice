@@ -1,6 +1,7 @@
+"use client";
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Building2, Mail, Lock, AlertCircle } from 'lucide-react';
+import { LuBuilding2 as Building2, LuMail as Mail, LuLock as Lock, LuCircleAlert as AlertCircle } from 'react-icons/lu';
 
 export function LoginPage() {
   const { signIn } = useAuth();

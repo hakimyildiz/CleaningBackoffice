@@ -1,15 +1,7 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { serviceRecordsApi, invoicesApi, type ServiceRecord, type Invoice } from '../../lib/api';
-import {
-  Calendar,
-  FileText,
-  CreditCard,
-  Clock,
-  Plus,
-  Home,
-  CheckCircle,
-  AlertCircle,
-} from 'lucide-react';
+import { LuCalendar as Calendar, LuFileText as FileText, LuCreditCard as CreditCard, LuClock as Clock, LuPlus as Plus, LuHouse as Home, LuCircleCheck as CheckCircle, LuCircleAlert as AlertCircle } from 'react-icons/lu';
 
 export function CustomerDashboard() {
   const [upcomingServices, setUpcomingServices] = useState<ServiceRecord[]>([]);

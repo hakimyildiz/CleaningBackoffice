@@ -1,6 +1,7 @@
+"use client";
 import { useState, useEffect } from 'react';
 import { cleanersApi, serviceRecordsApi, type Cleaner, type ServiceRecord } from '../../lib/api';
-import { Clock, Users, CheckCircle, Calendar, UserCheck } from 'lucide-react';
+import { LuClock as Clock, LuUsers as Users, LuCircleCheck as CheckCircle, LuCalendar as Calendar, LuUserCheck as UserCheck } from 'react-icons/lu';
 
 export function CleanerManagerDashboard() {
   const [cleaners, setCleaners] = useState<Cleaner[]>([]);
