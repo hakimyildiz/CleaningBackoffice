@@ -35,5 +35,22 @@ module.exports = {
     refreshSecret: process.env.JWT_REFRESH_SECRET,
     accessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d'
-  }
+  },
+  MAIL: {
+    host: process.env.MAIL_HOST || 'smtp.example.com',
+    port: parseInt(process.env.MAIL_PORT || '587', 10),
+    secure: process.env.MAIL_SECURE === 'true',
+    user: process.env.MAIL_USER || 'noreply@mopsy.app',
+    pass: process.env.MAIL_PASS || 'changeme_mail_password',
+    from: process.env.MAIL_FROM || '"Mopsy" <noreply@mopsy.app>'
+  },
+  APP_URL: process.env.APP_URL || 'https://test.bellaclean.co.uk',
+  SCHEDULE_LOOKAHEAD_MONTHS: parseInt(process.env.SCHEDULE_LOOKAHEAD_MONTHS, 10) || 6,
+  PAUSE_BUFFER_HOURS: parseInt(process.env.PAUSE_BUFFER_HOURS, 10) || 24,
+  UPLOAD_BASE_PATH: process.env.UPLOAD_BASE_PATH || 'uploads',
+  MAX_PHOTO_SIZE_MB: parseInt(process.env.MAX_PHOTO_SIZE_MB, 10) || 10,
+  CHROMIUM_PATH: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
+  GOOGLE_SERVICE_ACCOUNT_KEY_PATH: process.env.GOOGLE_SERVICE_ACCOUNT_KEY_PATH || null,
+  GOOGLE_DRIVE_ROOT_FOLDER_ID: process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID || null,
+  INVOICE_DUE_DAYS: parseInt(process.env.INVOICE_DUE_DAYS, 10) || 14
 };

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice {{INVOICE_NUMBER}}</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #334155;
+      margin: 0;
+      padding: 40px;
+      font-size: 13px;
+      line-height: 1.5;
+      background: #ffffff;
+      -webkit-print-color-adjust: exact;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+    }
+    .logo-container img {
+      max-width: 220px;
+      height: auto;
+    }
+    .company-details {
+      text-align: right;
+      font-size: 11px;
+      color: #64748b;
+    }
+    .company-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 4px;
+    }
+    .invoice-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #1e3a8a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+    .meta-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      gap: 20px;
+    }
+    .bill-to, .invoice-info {
+      flex: 1;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 15px;
+    }
+    .section-title {
+      font-size: 10px;
+      font-weight: bold;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 4px;
+    }
+    .client-name {
+      font-size: 14px;
+      font-weight: bold;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+    .info-label {
+      color: #64748b;
+      font-weight: 500;
+    }
+    .info-value {
+      color: #0f172a;
+      font-weight: 600;
+      text-align: right;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: bold;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .status-sent { background: #dbeafe; color: #1e40af; }
+    .status-paid { background: #dcfce7; color: #15803d; }
+    .status-partially_paid { background: #fef9c3; color: #854d0e; }
+    .status-overdue { background: #fee2e2; color: #b91c1c; }
+    .status-forwarded { background: #f1f5f9; color: #475569; }
+    
+    .service-summary {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 12px 15px;
+      margin-bottom: 25px;
+      font-size: 12px;
+    }
+    .service-summary-title {
+      font-weight: bold;
+      color: #1e40af;
+      margin-bottom: 4px;
+    }
+    
+    table.invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+    }
+    table.invoice-table th {
+      background: #1e3a8a;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 10px 12px;
+      text-align: left;
+    }
+    table.invoice-table th.right-align,
+    table.invoice-table td.right-align {
+      text-align: right;
+    }
+    table.invoice-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+    }
+    table.invoice-table tr:last-child td {
+      border-bottom: 2px solid #cbd5e1;
+    }
+    
+    .totals-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 30px;
+    }
+    .totals-table {
+      width: 320px;
+      font-size: 13px;
+    }
+    .totals-table tr td {
+      padding: 6px 0;
+    }
+    .totals-table tr.grand-total td {
+      border-top: 2px solid #e2e8f0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #1e3a8a;
+      padding-top: 10px;
+    }
+    .totals-table tr.accent-row td {
+      color: #0d9488;
+      font-weight: bold;
+    }
+    
+    .payment-details {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      font-size: 12px;
+    }
+    .payment-grid-item span {
+      display: block;
+    }
+    .payment-label {
+      color: #64748b;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .payment-value {
+      color: #0f172a;
+      font-weight: bold;
+    }
+    
+    .invoice-note {
+      font-size: 11px;
+      color: #64748b;
+      border-left: 3px solid #cbd5e1;
+      padding-left: 10px;
+      margin-bottom: 25px;
+      white-space: pre-line;
+    }
+    
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #94a3b8;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-container">
+      <img src="{{LOGO_BASE64}}" alt="{{COMPANY_NAME}}">
+    </div>
+    <div class="company-details">
+      <div class="company-name">{{COMPANY_NAME}}</div>
+      <div>{{COMPANY_ADDRESS}}</div>
+      <div>Phone: {{COMPANY_PHONE}} | Email: {{COMPANY_EMAIL}}</div>
+      <div>Web: {{COMPANY_WEBSITE}}</div>
+      <div>Co Reg No: {{COMPANY_NO}} | VAT No: {{VAT_NO}}</div>
+    </div>
+  </div>
+
+  <div class="meta-container">
+    <div class="bill-to">
+      <div class="section-title">Bill To</div>
+      <div class="client-name">{{CLIENT_NAME}}</div>
+      <div style="color: #475569; white-space: pre-line;">{{CLIENT_ADDRESS}}</div>
+      <div style="color: #64748b; margin-top: 5px;">{{CLIENT_EMAIL}}</div>
+    </div>
+    
+    <div class="invoice-info">
+      <div class="section-title">Invoice Details</div>
+      <div class="invoice-title" style="margin-top: 0; font-size: 16px;">{{INVOICE_NUMBER}}</div>
+      
+      <div class="info-row" style="margin-top: 8px;">
+        <span class="info-label">Invoice Date:</span>
+        <span class="info-value">{{INVOICE_DATE}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Due Date:</span>
+        <span class="info-value">{{INVOICE_DUE_DATE}}</span>
+      </div>
+      <div class="info-row" style="align-items: center; margin-top: 5px;">
+        <span class="info-label">Status:</span>
+        <span class="info-value">
+          <span class="status-badge {{INVOICE_STATUS_CLASS}}">{{INVOICE_STATUS}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="service-summary">
+    <div class="service-summary-title">Service Details</div>
+    <div>Property: <strong>{{SERVICE_ADDRESS}}</strong></div>
+    <div>Scheduled Date: <strong>{{SERVICE_DATE}}</strong> (Estimated: {{ESTIMATED_HOURS}} hours)</div>
+  </div>
+
+  <table class="invoice-table">
+    <thead>
+      <tr>
+        <th style="width: 55%;">Description</th>
+        <th class="right-align" style="width: 15%;">Qty / Hours</th>
+        <th class="right-align" style="width: 15%;">Unit Rate</th>
+        <th class="right-align" style="width: 15%;">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{LINE_ITEMS}}
+    </tbody>
+  </table>
+
+  <div class="totals-container">
+    <table class="totals-table">
+      <tr>
+        <td style="color: #64748b;">Subtotal</td>
+        <td class="right-align" style="font-weight: 600;">{{SUBTOTAL}}</td>
+      </tr>
+      <tr>
+        <td style="color: #64748b;">Extras / Service Options</td>
+        <td class="right-align" style="font-weight: 600;">{{EXTRAS_TOTAL}}</td>
+      </tr>
+      {{PREVIOUS_BALANCE_ROW}}
+      {{CREDIT_APPLIED_ROW}}
+      <tr class="grand-total">
+        <td>Total Invoice Value</td>
+        <td class="right-align">{{TOTAL}}</td>
+      </tr>
+      <tr class="accent-row">
+        <td>Amount Paid</td>
+        <td class="right-align">{{AMOUNT_PAID}}</td>
+      </tr>
+      <tr class="grand-total" style="font-size: 18px; border-top: 2px double #1e3a8a;">
+        <td>Balance Due</td>
+        <td class="right-align" style="color: #b91c1c;">{{BALANCE_DUE}}</td>
+      </tr>
+    </table>
+  </div>
+
+  {{NOTE_SECTION}}
+
+  <div class="payment-details">
+    <div class="section-title" style="margin-bottom: 10px;">Payment Bank Transfer Details</div>
+    <div class="payment-grid">
+      <div class="payment-grid-item">
+        <span class="payment-label">Bank Name</span>
+        <span class="payment-value">{{BANK_NAME}}</span>
+      </div>
+      <div class="payment-grid-item">
+        <span class="payment-label">Account Name</span>
+        <span class="payment-value">{{ACCOUNT_NAME}}</span>
+      </div>
+      <div class="payment-grid-item" style="margin-top: 5px;">
+        <span class="payment-label">Sort Code</span>
+        <span class="payment-value">{{SORT_CODE}}</span>
+      </div>
+      <div class="payment-grid-item" style="margin-top: 5px;">
+        <span class="payment-label">Account Number</span>
+        <span class="payment-value">{{ACCOUNT_NO}}</span>
+      </div>
+      <div class="payment-grid-item" style="grid-column: span 2; margin-top: 5px;">
+        <span class="payment-label">IBAN</span>
+        <span class="payment-value">{{IBAN}}</span>
+      </div>
+      <div class="payment-grid-item" style="grid-column: span 2; margin-top: 5px; background: #fffbeb; border: 1px dashed #f59e0b; border-radius: 8px; padding: 8px;">
+        <span class="payment-label" style="color: #b45309;">Required Payment Reference</span>
+        <span class="payment-value" style="color: #b45309; font-size: 13px;">{{PAYMENT_REFERENCE}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Thank you for your business. For any billing queries, please contact accounts@bellaclean.co.uk.<br>
+    <strong>{{COMPANY_NAME}}</strong> | {{COMPANY_WEBSITE}}
+  </div>
+</body>
+</html>

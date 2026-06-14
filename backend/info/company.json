@@ -1,0 +1,20 @@
+{
+  "name": "BellaClean Ltd",
+  "addressLine1": "123 Example Street",
+  "addressLine2": "London",
+  "postCode": "EC1A 1BB",
+  "country": "United Kingdom",
+  "companyNo": "12345678",
+  "vatNo": "GB123456789",
+  "email": "accounts@bellaclean.co.uk",
+  "phone": "+44 20 1234 5678",
+  "website": "https://www.bellaclean.co.uk",
+  "bank": {
+    "bankName": "Barclays Bank",
+    "accountName": "BellaClean Ltd",
+    "sortCode": "20-00-00",
+    "accountNo": "12345678",
+    "iban": "GB00BARC20000012345678",
+    "reference": "Use your Invoice Number as payment reference"
+  }
+}
