@@ -52,5 +52,6 @@ module.exports = {
   CHROMIUM_PATH: process.env.CHROMIUM_PATH || '/usr/bin/chromium',
   GOOGLE_SERVICE_ACCOUNT_KEY_PATH: process.env.GOOGLE_SERVICE_ACCOUNT_KEY_PATH || null,
   GOOGLE_DRIVE_ROOT_FOLDER_ID: process.env.GOOGLE_DRIVE_ROOT_FOLDER_ID || null,
-  INVOICE_DUE_DAYS: parseInt(process.env.INVOICE_DUE_DAYS, 10) || 14
+  INVOICE_DUE_DAYS: parseInt(process.env.INVOICE_DUE_DAYS, 10) || 14,
+  DEFAULT_REQUEST_BUFFER_HOURS: parseInt(process.env.DEFAULT_REQUEST_BUFFER_HOURS, 10) || 24
 };

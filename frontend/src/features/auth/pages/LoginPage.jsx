@@ -4,8 +4,10 @@ import useAuth from '../../../hooks/useAuth';
 import LoginForm from '../components/LoginForm';
 import { Sparkles } from 'lucide-react';
 
+import { getPortalRoute } from '../../../components/common/ProtectedRoute';
+
 export const LoginPage = () => {
-  const { login, accessToken, isLoading: authLoading } = useAuth();
+  const { login, role, accessToken, isLoading: authLoading } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -17,10 +19,11 @@ export const LoginPage = () => {
 
   // If user is already logged in, redirect them immediately
   useEffect(() => {
-    if (accessToken) {
-      navigate(from, { replace: true });
+    if (accessToken && role) {
+      const destination = from === '/' || from === '/login' ? getPortalRoute(role) : from;
+      navigate(destination, { replace: true });
     }
-  }, [accessToken, navigate, from]);
+  }, [accessToken, role, navigate, from]);
 
   const handleLoginSubmit = async ({ username, password }) => {
     setLoading(true);

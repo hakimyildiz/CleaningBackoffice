@@ -59,6 +59,23 @@ import ServiceFormPage from './features/services/pages/ServiceFormPage';
 // Settings Pages
 import ServiceOptionsSettingsPage from './features/settings/pages/ServiceOptionsSettingsPage';
 
+// Phase 6 Layouts & Pages
+import CustomerLayout from './layouts/CustomerLayout';
+import CustomerHomePage from './features/customerPortal/pages/CustomerHomePage';
+import CustomerServicesPage from './features/customerPortal/pages/CustomerServicesPage';
+import CustomerSchedulePage from './features/customerPortal/pages/CustomerSchedulePage';
+import CustomerInvoicesPage from './features/customerPortal/pages/CustomerInvoicesPage';
+import CustomerInvoiceDetailPage from './features/customerPortal/pages/CustomerInvoiceDetailPage';
+
+import AgencyLayout from './layouts/AgencyLayout';
+import AgencyHomePage from './features/agencyPortal/pages/AgencyHomePage';
+import AgencyPropertiesPage from './features/agencyPortal/pages/AgencyPropertiesPage';
+import AgencySchedulePage from './features/agencyPortal/pages/AgencySchedulePage';
+import AgencyInvoicesPage from './features/agencyPortal/pages/AgencyInvoicesPage';
+import AgencyInvoiceDetailPage from './features/agencyPortal/pages/AgencyInvoiceDetailPage';
+import AgencyRequestsPage from './features/agencyPortal/pages/AgencyRequestsPage';
+import StaffAssignmentView from './features/agencyPortal/pages/StaffAssignmentView';
+
 // Role restriction wrapper that displays an error toast on redirect
 const RoleRestrictedRoute = ({ allowedRoles, children }) => {
   const { role } = useAuth();
@@ -102,7 +119,7 @@ function App() {
       <Route
         path="/"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.MANAGER, ROLES.CLEANER_MANAGER, ROLES.CLEANER]}>
             <MainLayout />
           </ProtectedRoute>
         }
@@ -336,6 +353,30 @@ function App() {
         />
 
         <Route path="settings" element={<UnderConstruction title="System Settings" />} />
+      </Route>
+
+      {/* Customer Portal routes — CustomerLayout wrapper */}
+      <Route element={<ProtectedRoute allowedRoles={['customer']} redirectTo="/dashboard" />}>
+        <Route element={<CustomerLayout />}>
+          <Route path="/customer-portal"              element={<CustomerHomePage />} />
+          <Route path="/customer-portal/properties"   element={<CustomerServicesPage />} />
+          <Route path="/customer-portal/schedule"     element={<CustomerSchedulePage />} />
+          <Route path="/customer-portal/invoices"     element={<CustomerInvoicesPage />} />
+          <Route path="/customer-portal/invoices/:id" element={<CustomerInvoiceDetailPage />} />
+        </Route>
+      </Route>
+
+      {/* Agency Portal routes — AgencyLayout wrapper */}
+      <Route element={<ProtectedRoute allowedRoles={['agency_manager','agency_bookkeeper','agency_staff']} redirectTo="/dashboard" />}>
+        <Route element={<AgencyLayout />}>
+          <Route path="/agency-portal"                    element={<AgencyHomePage />} />
+          <Route path="/agency-portal/properties"         element={<AgencyPropertiesPage />} />
+          <Route path="/agency-portal/schedule"           element={<AgencySchedulePage />} />
+          <Route path="/agency-portal/invoices"           element={<AgencyInvoicesPage />} />
+          <Route path="/agency-portal/invoices/:id"       element={<AgencyInvoiceDetailPage />} />
+          <Route path="/agency-portal/requests"           element={<AgencyRequestsPage />} />
+          <Route path="/agency-portal/staff-assignments"  element={<StaffAssignmentView />} />
+        </Route>
       </Route>
 
       {/* 404 Route */}

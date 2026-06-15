@@ -30,6 +30,10 @@ const creditLedgerRoutes = require('./modules/creditLedger/creditLedger.routes')
 const employeePaymentRoutes = require('./modules/employeePayment/employeePayment.routes');
 const changeRequestRoutes = require('./modules/changeRequest/changeRequest.routes');
 
+// New Phase 6 route modules
+const customerPortalRoutes = require('./modules/customerPortal/customerPortal.routes');
+const agencyPortalRoutes = require('./modules/agencyPortal/agencyPortal.routes');
+
 const ServiceController = require('./modules/service/service.controller');
 const db = require('./config/db');
 const verifyToken = require('./middleware/auth');
@@ -84,6 +88,10 @@ app.use('/api/v1/payments', paymentRoutes);
 app.use('/api/v1/credits', creditLedgerRoutes);
 app.use('/api/v1/employee-payments', employeePaymentRoutes);
 app.use('/api/v1/requests', changeRequestRoutes);
+
+// Phase 6 Portal Routes
+app.use('/api/v1/customer-portal', customerPortalRoutes);
+app.use('/api/v1/agency-portal', agencyPortalRoutes);
 
 // Live rate resolution helper route
 app.get('/api/v1/rates/resolve', verifyToken, requireRole('admin', 'manager'), ServiceController.resolveLiveRate);
